@@ -1,0 +1,49 @@
+h1 {
+  font-size: 55px;
+  color: white;
+}
+
+h2 {
+  text-decoration: underline;
+  text-align: center;
+}
+
+h4{
+  font-size: 23px;
+  color: #0d6efd;
+  /*text-decoration: underline;*/
+}
+
+.jumbotron {
+  background-color: #0d6efd;
+}
+
+p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.navbar {
+  border: 5px solid black;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover {
+  color: black;
+}
+
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
+
+#svgContainer {
+  display: flex;
+  justify-content: center; 
+}

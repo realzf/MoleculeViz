@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <title>Molecule Displayer</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"> </script>
+      <script src="script.js"></script>
+      <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+    <div class="jumbotron">
+      <h1><b>MOLECULE DISPLAYER</b></h1>
+    </div>
+    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="pos-f-t">
+            <div class="collapse" id="navbarToggleExternalContent">
+              <div class="bg-primary p-4">
+                <ul class="navbar-nav flex-column">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#uploadSDF"><p>Upload SDF File</p></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#addElement"><p>Add Elements</p></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#removeElement"><p>Remove Elements</p></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#displayMolecule"><p>Display Molecule</p></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <nav class="navbar navbar-dark bg-primary" style="background-color: #0d6efd;">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <h4 class="text-white">Menu</h4>
+            </nav>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div id="addElement" style="display:none;">
+            <h2>Add Elements</h2><br/>
+            <form id="addElementForm" method="post">
+              <label for="elementNumber"><h4>Element Number:</h4></label>
+              <input type="text" class="form-control" id="elementNumber" placeholder="Enter element number" required pattern="[0-9]+">
+              <br/>
+
+              <label for="elementCode"><h4>Element Code:</h4></label>
+              <input type="text" class="form-control" id="elementCode" placeholder="Enter element code" required>
+              <br/>
+
+              <label for="elementName"><h4>Element Name:</h4></label>
+              <input type="text" class="form-control" id="elementName" placeholder="Enter element name" required>
+              <br/>
+
+              <label for="color1"><h4>Color 1:</h4></label>
+              <input type="color" class="form-control" id="color1" value="#000000" required>
+              <br/>
+
+              <label for="color2"><h4>Color 2:</h4></label>
+              <input type="color" class="form-control" id="color2" value="#000000" required>
+              <br/>
+
+              <label for="color3"><h4>Color 3:</h4></label>
+              <input type="color" class="form-control" id="color3" value="#000000" required>
+              <br/>
+
+              <label for="radius"><h4>Radius:</h4></label>
+              <input type="number" class="form-control" id="radius" min="10" max="100" step="0.1" value="1" required>
+              <br/>
+
+              <button type="submit" class="btn btn-primary">Add Element</button>
+            </form>
+          </div>
+
+          <div id="uploadSDF">
+            <h2>Upload SDF File</h2>
+            <form action="sdf" enctype="multipart/form-data" method="post">
+              <div class="form-group">
+                <label for="file">Select an SDF file to upload:</label>
+                <input type="file" class="form-control-file" id="file" name="file">
+              </div>
+              <div class="form-group">
+                <label for="molecule_name">Molecule Name:</label>
+                <input type="text" class="form-control" id="molecule_name" name="molecule_name" required>
+                <div class="invalid-feedback">Please enter a molecule name.</div>
+              </div>
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+          </div>
+
+          <div id="removeElement" style="display:none;">
+            <h2>Remove Elements</h2>
+            <form id="removeElementForm">
+              <table id = "elementTable" class="table table-sm table-active">
+                <thead>
+                  <tr>
+                    <th scope="col">Element Number</th>
+                    <th scope="col">Element Code</th>
+                    <th scope="col">Element Name</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <div id="displayMolecule" style="display:none;">
+            <h2>Select Molecule To Display</h2>
+            <form id="displayMoleculeForm">
+              <table id = "moleculeTable" class="table table-sm table-active">
+                <thead>
+                  <tr>
+                    <th scope="col">Molecule Name</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="svgContainer">
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
+  </body>
+</html>
